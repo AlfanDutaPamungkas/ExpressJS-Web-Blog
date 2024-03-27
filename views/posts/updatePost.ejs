@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/form.css" />
+    <title>Post Update</title>
+    <script src="https://cdn.tiny.cloud/1/<%=api%>/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: 'textarea'
+      });
+    </script>
+  </head>
+  <body>
+    <!-- nav -->
+    <%-include('../partials/navbar.ejs')%>
+    <div class="form-container">
+      <!-- icon -->
+      <h1>
+        Update Post
+        <!-- add icon -->
+        <i class="fas fa-plus"></i>
+      </h1>
+
+      <%if(error){ %>
+        <small class="error">
+          <i class="fas fa-exclamation-circle"></i>
+          <%=error%>
+        </small>
+      <%}%>
+
+      <form action="/api/v1/posts/<%=post?._id%>?_method=put" method="POST" enctype="multipart/form-data">
+        <!-- Post Title -->
+        <div class="input-wrapper">
+          <label for="name">Post Title</label>
+          <input type="text" name="title" value="<%=post?.title%>" required/>
+          <!-- err -->
+        </div>
+
+        <!-- Category -->
+        <div class="input-wrapper">
+          <label for="category">Category</label>
+          <select name="category" required>
+            <option value="technology">Technology</option>
+            <option value="health">Health</option>
+            <option value="travel">Travel</option>
+            <option value="fashion">Fashion</option>
+            <option value="culinary">Culinary</option>
+            <option value="entertainmen">Entertainment</option>
+            <option value="other">Other</option>
+          </select>
+          <!-- err -->
+        </div>
+        <div class="input-wrapper">
+          <!-- Post Body -->
+          <label for="body">Post Body</label>
+          <textarea name="description" cols="30" rows="10" required><%=post?.description%></textarea>
+          <!-- err -->
+        </div>
+        <!-- Post Image -->
+        <div class="input-wrapper">
+          <label for="image">Post Image</label>
+          <input type="file" name="file" />
+          <!-- err -->
+        </div>
+
+        <button type="submit">Update</button>
+      </form>
+    </div>
+    <%-include('../partials/footer.ejs')%>
+  </body>
+</html>
